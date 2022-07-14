@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export LOUVRE_HOME="$(cd "$(dirname "$0")/.." && pwd)"
+source "${LOUVRE_HOME}/scripts/aux/core.bash"
+
+main() {
+   set -x
+   rsync \
+      -e "ssh -p ${ANDROID_PORT}" \
+      "${LOUVRE_HOME}/target/aarch64-linux-android/release/${LOUVRE_BIN_NAME}" \
+      "${ANDROID_HOST}:/data/data/com.termux/files/home/${LOUVRE_BIN_NAME}"
+}
+
+main "$@"

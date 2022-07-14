@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+set -x
+
+export LOUVRE_HOME="$(cd "$(dirname "$0")/.." && pwd)"
+source "${LOUVRE_HOME}/scripts/aux/core.bash"
+
+_install() {
+   if command -v "$1"; then
+      return 0;
+   fi
+   sudo apt-get install "$1" || sudo apt install "$1" || brew install "$1"
+};
+
+_install_many() {
+   for dep in "$@"; do
+      _install "$dep" || true
+   done
+}
+
+_install_many "$@"

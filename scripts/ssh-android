@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export LOUVRE_HOME="$(cd "$(dirname "$0")/.." && pwd)"
+source "${LOUVRE_HOME}/scripts/aux/core.bash"
+
+main() {
+   ssh -p "$ANDROID_PORT" "$ANDROID_HOST" "$@"
+}
+
+main "$@"

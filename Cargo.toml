@@ -1,0 +1,3 @@
+[workspace]
+members = ["core", "common_derive", "common"]
+resolver = "2"

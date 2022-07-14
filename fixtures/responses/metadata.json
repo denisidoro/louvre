@@ -1,0 +1,108 @@
+[
+   {
+      "name": "__NAME__",
+      "id": 1035,
+      "aggregated_rating": 90.0,
+      "artworks": [
+         {
+            "id": 3509,
+            "image_id": "pyjnkh9ma6kv0nyi2le"
+         },
+         {
+            "id": 3510,
+            "image_id": "pn1esfa9quakaoyf3b9"
+         },
+         {
+            "id": 3511,
+            "image_id": "k549wqp7tdykmircr0v"
+         },
+         {
+            "id": 3512,
+            "image_id": "shsfsrmdduhlkn5piky"
+         },
+         {
+            "id": 3513,
+            "image_id": "jtcmtbqmis6nwi5rmej"
+         }
+      ],
+      "cover": {
+         "id": 170804,
+         "image_id": "co3sk"
+      },
+      "first_release_date": 1099526400,
+      "genres": [
+         {
+            "id": 12,
+            "name": "Role-playing (RPG)"
+         },
+         {
+            "id": 31,
+            "name": "Adventure"
+         }
+      ],
+      "involved_companies": [
+         {
+            "id": 167543,
+            "company": {
+               "id": 70,
+               "name": "Nintendo"
+            },
+            "publisher": true
+         },
+         {
+            "id": 167544,
+            "company": {
+               "id": 37,
+               "name": "Capcom"
+            },
+            "developer": true
+         },
+         {
+            "id": 171305,
+            "company": {
+               "id": 41283,
+               "name": "Flagship"
+            },
+            "developer": true
+         }
+      ],
+      "multiplayer_modes": [
+         {
+            "offlinecoopmax": 2
+         }
+      ],
+      "rating": 84.25441560031929,
+      "screenshots": [
+         {
+            "id": 118763,
+            "image_id": "wximjt3wxeenu6zv01u"
+         },
+         {
+            "id": 118765,
+            "image_id": "mtnzk1jgzt2c5shlhg0"
+         },
+         {
+            "id": 118766,
+            "image_id": "kotltnj3n1cao6sntf1"
+         },
+         {
+            "id": 176343,
+            "image_id": "p8xoi64fixyy0yviz9o"
+         },
+         {
+            "id": 176344,
+            "image_id": "kmhexy6lfqjdzar5f2d"
+         },
+         {
+            "id": 176345,
+            "image_id": "qeumtencqatxe9q2icf"
+         },
+         {
+            "id": 176346,
+            "image_id": "b5hhixmlvoyt6djvwac2"
+         }
+      ],
+      "storyline": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "summary": "This game is super fun."
+   }
+]

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export LOUVRE_HOME="$(cd "$(dirname "$0")/.." && pwd)"
+source "${LOUVRE_HOME}/scripts/aux/core.bash"
+
+main() {
+   local f="${LOUVRE_HOME}/target/debug/${LOUVRE_BIN_NAME}"
+   if [ -f "$f" ]; then
+      "$f" "$@"
+      return 0
+   fi
+
+   f="${LOUVRE_HOME}/target/release/${LOUVRE_BIN_NAME}"
+   if [ -f "$f" ]; then
+      "$f" "$@"
+      return 0
+   fi
+
+   if command_exists "${LOUVRE_BIN_NAME}"; then
+      "${LOUVRE_BIN_NAME}" "$@"
+      return 0
+   fi
+
+   cd "$LOUVRE_HOME"
+   cargo run -- "$@"
+}
+
+main "$@"

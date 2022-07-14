@@ -1,0 +1,4 @@
+/target
+file.jpg
+/fixtures/ROMs/**/meta/**/*
+Cargo.lock
