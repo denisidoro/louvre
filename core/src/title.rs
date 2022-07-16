@@ -42,6 +42,7 @@ fn regex(re: &str) -> Regex {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use walkdir::WalkDir;
 
     #[test]
     fn test_prettify() {
