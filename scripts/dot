@@ -5,6 +5,10 @@ export LOUVRE_HOME="$(cd "$(dirname "$0")/.." && pwd)"
 export PROJ_HOME="$LOUVRE_HOME"
 export PROJ_NAME="louvre"
 
+# TODO: bump dotfiles + remove this fn
+log::note() { log::info "$@"; }
+export -f log::note
+
 dot::clone() {
   git clone 'https://github.com/denisidoro/dotfiles' "$DOTFILES"
   cd "$DOTFILES"
