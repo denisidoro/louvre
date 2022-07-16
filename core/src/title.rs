@@ -107,7 +107,6 @@ mod tests {
                 "Luigi's Mansion",
                 "Mega Man X4",
                 "Metroid Prime",
-                "Monster Hunter 4",
                 "Monster Hunter 4 Ultimate",
                 "Monster Hunter Freedom Unite",
                 "Monster Hunter Tri",
@@ -136,7 +135,6 @@ mod tests {
                 "The Legend of Zelda - The Wind Waker",
                 "The World Ends With You",
                 "Uncharted 3 Drakes Deception",
-                "scph1001"
             ]
         );
     }
