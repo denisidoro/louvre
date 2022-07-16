@@ -1,6 +1,5 @@
 use crate::prelude::*;
 
-
 static REGEXES: Lazy<[Regex; 6]> = Lazy::new(|| {
     [
         regex(r"\([^\)]+\)"),    // remove (...)
