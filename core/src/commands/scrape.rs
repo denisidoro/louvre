@@ -21,7 +21,7 @@ impl FileWorker for Input {
             let mut filepaths: Vec<PathBuf> = vec![];
 
             let entries = WalkDir::new(collection_path)
-                .max_depth(1)
+                .max_depth(6)
                 .into_iter()
                 .filter_map(|e| e.ok());
 
@@ -41,8 +41,7 @@ impl FileWorker for Input {
     }
 
     fn process(collection: &Collection, file: &Path, system: &System) -> Result<WorkerResult> {
-        let original_title = get_title(file)?;
-        let title = title::prettify(&original_title);
+        let title = title::prettify(file);
         let igdb_client = system.get::<igdb::Client>()?;
         let was_already_processed = process_title(collection, &title, file, igdb_client)?;
         let progress = if was_already_processed {
@@ -55,13 +54,6 @@ impl FileWorker for Input {
             progress,
         })
     }
-}
-
-fn get_title(file: &Path) -> Result<String> {
-    file.file_stem()
-        .and_then(|s| s.to_str())
-        .map(|s| s.to_owned())
-        .context("no title")
 }
 
 fn yaml_path(collection: &Collection, title: &str) -> PathBuf {

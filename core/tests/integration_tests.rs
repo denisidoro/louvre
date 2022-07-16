@@ -50,7 +50,7 @@ fn copy_roms() -> Result<(PathBuf, PathBuf)> {
     let _ = fs::remove_dir_all(&testdata_dir);
 
     let entries = WalkDir::new(&roms_dir)
-        .max_depth(4)
+        .max_depth(6)
         .into_iter()
         .filter_map(|e| e.ok());
 
@@ -113,6 +113,13 @@ collections:
       - Update
       - Pok[ée]
     launch: retroarch --3ds ${{file}}
+  - name: Playstation 3
+    path: {testdata}/ROMs/ps3
+    extensions: 
+      - bin
+    platform: ps3
+    denylist: ~
+    launch: retroarch --ps3 ${{file}}
 tracing:
   time: false
   level: {bin}=trace
@@ -179,7 +186,7 @@ impl Runner {
         self.call(&["scrape"])?;
 
         twitch_mock.assert_hits(1);
-        igdb_mock.assert_hits(10); // TODO
+        igdb_mock.assert_hits(12);
 
         twitch_mock.delete();
         igdb_mock.delete();
@@ -213,7 +220,7 @@ impl Runner {
 
         self.call(&["media", "download"])?;
 
-        mock.assert_hits(30);
+        mock.assert_hits(36);
         mock.delete();
 
         let zelda = self.testdata_dir.join(PathBuf::from_iter(&[
@@ -232,28 +239,44 @@ impl Runner {
     fn test_pegasus(&self) -> Result<()> {
         self.call(&["pegasus", "gen"])?;
 
-        let meta_path =
-            self.testdata_dir
-                .join(PathBuf::from_iter(&["ROMs", "gba", "metadata.pegasus.txt"]));
-        assert!(meta_path.exists());
+        self.assert_meta(
+            "gba",
+            &[
+                "game: __NAME__",
+                "file: Fullmetal Alchemist Stray Rondo.zip",
+                "release: 2004-11-04",
+                "genres: Role-playing (RPG), Adventure",
+                "assets.boxFront: meta/Fullmetal Alchemist Stray Rondo/boxFront.jpg",
+                "assets.background: meta/Fullmetal Alchemist Stray Rondo/background.jpg",
+                "assets.screenshot: meta/Fullmetal Alchemist Stray Rondo/screenshot.jpg",
+                "rating: 90%",
+                "developers: Capcom, Flagship",
+                "publishers: Nintendo",
+                "players: 2",
+                "summary: This game is super fun",
+                "description: Lorem ipsum",
+            ],
+        )?;
+
+        self.assert_meta(
+            "ps3",
+            &[
+                "file: BCES01175-[Uncharted 3 Drakes Deception]/PS3_GAME/USRDIR/EBOOT.BIN",
+                "assets.boxFront: meta/Uncharted 3 Drakes Deception/boxFront.jpg",
+            ],
+        )?;
+
+        Ok(())
+    }
+
+    fn assert_meta(&self, platform: &str, substrs: &[&str]) -> Result<()> {
+        let meta_path = self.testdata_dir.join(PathBuf::from_iter(&[
+            "ROMs",
+            platform,
+            "metadata.pegasus.txt",
+        ]));
 
         let meta = fs::read_to_string(meta_path)?;
-
-        let substrs = [
-            "game: __NAME_",
-            "file: Fullmetal Alchemist Stray Rondo.zip",
-            "release: 2004-11-04",
-            "genres: Role-playing (RPG), Adventure",
-            "assets.boxFront: meta/Fullmetal Alchemist Stray Rondo/boxFront.jpg",
-            "assets.background: meta/Fullmetal Alchemist Stray Rondo/background.jpg",
-            "assets.screenshot: meta/Fullmetal Alchemist Stray Rondo/screenshot.jpg",
-            "rating: 90%",
-            "developers: Capcom, Flagship",
-            "publishers: Nintendo",
-            "players: 2",
-            "summary: This game is super fun",
-            "description: Lorem ipsum",
-        ];
 
         for substr in substrs {
             assert!(meta.contains(substr));

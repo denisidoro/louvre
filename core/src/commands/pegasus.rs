@@ -34,7 +34,13 @@ impl Input {
 
             for meta_file in meta_files {
                 let meta = meta::get(&meta_file)?;
-                files.push(meta.file.clone());
+                let file = meta.file.clone();
+
+                if !collection.path.join(&file).exists() {
+                    continue;
+                }
+
+                files.push(file);
                 games_buffer.push_str(&pegasus::game::to_str(meta, &meta_file, collection)?);
                 games_buffer.push_str("\n\n");
             }
