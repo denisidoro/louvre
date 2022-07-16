@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use walkdir::WalkDir;
 
 static REGEXES: Lazy<[Regex; 6]> = Lazy::new(|| {
     [
@@ -45,23 +46,57 @@ mod tests {
 
     #[test]
     fn test_prettify() {
-        let cases = vec![
-            (
-                "Decrypted 1234 -   Legend of Zelda - Pokemon Bros. v1.2, The   (ROM) (ISO)",
-                "The Legend of Zelda - Pokémon Bros",
-            ),
-            (
-                "Monster Hunter 4 Ultimate Update v1.1 (EUR) ENC",
-                "Monster Hunter 4 Ultimate",
-            ),
-            (
-                "Phoenix Wright - Ace Attorney - Dual Destinies",
-                "Phoenix Wright - Ace Attorney - Dual Destinies",
-            ),
-        ];
+        let dir = PathBuf::from("../fixtures/ROMs");
+        let entries = WalkDir::new(&dir)
+            .max_depth(4)
+            .into_iter()
+            .filter_map(|e| e.ok());
 
-        for (input, output) in cases {
-            assert_eq!(output, prettify(input));
+        let mut output = vec![];
+        for entry in entries {
+            let path = entry.path();
+            let extension = path.extension().unwrap_or_default().to_string();
+            if ["zip", "rar", "7z", "iso"].contains(&extension.as_str()) {
+                let original_title = path.file_stem().unwrap_or_default().to_string();
+                output.push(prettify(&original_title));
+            }
         }
+
+        output.sort();
+        output.dedup();
+
+        assert_eq!(
+            output,
+            [
+                "Dragon Ball Z - Budokai Tenkaichi 3",
+                "Dragon Ball Z - Tenkaichi Tag Team",
+                "Elite Beat Agents",
+                "Fullmetal Alchemist Stray Rondo",
+                "Ghost Trick - Phantom Detective",
+                "God of War - Chains of Olympus",
+                "Luigi's Mansion",
+                "Metroid Prime",
+                "Monster Hunter Freedom Unite",
+                "Monster Hunter Tri",
+                "New Super Mario Bros",
+                "Paper Mario - The Thousand-Year Door",
+                "Pikmin",
+                "Pokémon - Version Cristal",
+                "Pokémon - Version Jaune - Edition Speciale Pikachu",
+                "Pokémon Emerald",
+                "Pokémon FireRed",
+                "Pokémon Trading Card Game",
+                "Super Mario Galaxy",
+                "Super Mario Sunshine",
+                "Super Smash Bros Melee",
+                "The Legend of Zelda - A Link to the Past",
+                "The Legend of Zelda - Oracle of Seasons",
+                "The Legend of Zelda - Phantom Hourglass",
+                "The Legend of Zelda - Spirit Tracks",
+                "The Legend of Zelda - The Minish Cap",
+                "The Legend of Zelda - The Wind Waker",
+                "The World Ends With You"
+            ]
+        );
     }
 }
