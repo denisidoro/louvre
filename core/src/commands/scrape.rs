@@ -21,7 +21,7 @@ impl FileWorker for Input {
             let mut filepaths: Vec<PathBuf> = vec![];
 
             let entries = WalkDir::new(collection_path)
-                .max_depth(5)
+                .max_depth(6)
                 .into_iter()
                 .filter_map(|e| e.ok());
 

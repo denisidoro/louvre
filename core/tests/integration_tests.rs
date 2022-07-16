@@ -50,7 +50,7 @@ fn copy_roms() -> Result<(PathBuf, PathBuf)> {
     let _ = fs::remove_dir_all(&testdata_dir);
 
     let entries = WalkDir::new(&roms_dir)
-        .max_depth(4)
+        .max_depth(6)
         .into_iter()
         .filter_map(|e| e.ok());
 
@@ -113,6 +113,13 @@ collections:
       - Update
       - Pok[ée]
     launch: retroarch --3ds ${{file}}
+  - name: Playstation 3
+    path: {testdata}/ROMs/ps3
+    extensions: 
+      - bin
+    platform: ps3
+    denylist: ~
+    launch: retroarch --ps3 ${{file}}
 tracing:
   time: false
   level: {bin}=trace
@@ -179,7 +186,7 @@ impl Runner {
         self.call(&["scrape"])?;
 
         twitch_mock.assert_hits(1);
-        igdb_mock.assert_hits(10); // TODO
+        igdb_mock.assert_hits(12);
 
         twitch_mock.delete();
         igdb_mock.delete();
@@ -213,7 +220,7 @@ impl Runner {
 
         self.call(&["media", "download"])?;
 
-        mock.assert_hits(30);
+        mock.assert_hits(36);
         mock.delete();
 
         let zelda = self.testdata_dir.join(PathBuf::from_iter(&[
@@ -235,7 +242,6 @@ impl Runner {
         let meta_path =
             self.testdata_dir
                 .join(PathBuf::from_iter(&["ROMs", "gba", "metadata.pegasus.txt"]));
-        assert!(meta_path.exists());
 
         let meta = fs::read_to_string(meta_path)?;
 
@@ -253,6 +259,21 @@ impl Runner {
             "players: 2",
             "summary: This game is super fun",
             "description: Lorem ipsum",
+        ];
+
+        for substr in substrs {
+            assert!(meta.contains(substr));
+        }
+
+        let meta_path =
+            self.testdata_dir
+                .join(PathBuf::from_iter(&["ROMs", "ps3", "metadata.pegasus.txt"]));
+
+        let meta = fs::read_to_string(meta_path)?;
+
+        let substrs = [
+            "file: BCES01175-[Uncharted 3 Drakes Deception]/PS3_GAME/USRDIR/EBOOT.BIN",
+            "assets.boxFront: meta/Uncharted 3 Drakes Deception/boxFront.jpg",
         ];
 
         for substr in substrs {
