@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export PROJ_HOME="$(cd "$(dirname "$0")/.." && pwd)"
+export LOUVRE_HOME="$(cd "$(dirname "$0")/.." && pwd)"
+export PROJ_HOME="$PROJ_HOME"
 export PROJ_NAME="louvre"
-export CARGO_PATH="${PROJ_HOME}/core/Cargo.toml"
+export CARGO_PATH="${LOUVRE_HOME}/core/Cargo.toml"
 
 # TODO: bump dotfiles + remove this fn
 log::note() { log::info "$@"; }
