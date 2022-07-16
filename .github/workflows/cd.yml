@@ -54,7 +54,7 @@ jobs:
 
     - name: Build
       id: build
-      run: scripts/release ${{ matrix.target }}
+      run: scripts/dot rust release ${{ matrix.target }}
 
     - name: Get the version
       id: get_version
