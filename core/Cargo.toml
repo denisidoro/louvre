@@ -1,6 +1,6 @@
 [package]
 name = "louvre"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Denis Isidoro <denis_isidoro@live.com>"]
 edition = "2021"
 description = "Lightweight, cross-platform game scraper"
