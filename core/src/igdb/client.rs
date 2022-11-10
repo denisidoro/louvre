@@ -34,10 +34,28 @@ impl Client {
 
         let games: Vec<Game> = json_from_str(&text)?;
 
+        let denylisted_name_substrings: Vec<String> = self
+            .config
+            .yaml
+            .igdb
+            .denylisted_name_substrings
+            .clone()
+            .into_iter()
+            .map(|s| s.to_ascii_lowercase())
+            .collect();
+
         games
             .into_iter()
-            .next()
-            .with_context(|| format!("empty result for body {}", body))
+            .find(|game| {
+                let game_name = game.name.to_ascii_lowercase();
+                for denylisted_name_substring in &denylisted_name_substrings {
+                    if denylisted_name_substring.contains(&game_name) {
+                        return false;
+                    }
+                }
+                true
+            })
+            .with_context(|| format!("no valid game for body {}", body))
     }
 
     pub fn download(

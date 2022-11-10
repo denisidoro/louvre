@@ -94,6 +94,8 @@ twitch:
 igdb:
   api_base_url: {base_url}
   images_base_url: {base_url}
+  denylisted_name_substrings:
+    - bad game
 collections:
   - name: Game Boy Advance
     path: {testdata}/ROMs/gba
