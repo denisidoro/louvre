@@ -19,6 +19,7 @@ pub struct Parallelism {
 pub struct Igdb {
     pub api_base_url: String,
     pub images_base_url: String,
+    pub denylisted_name_substrings: HashSet<String>,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -96,6 +97,7 @@ impl Default for YamlConfig {
             igdb: Igdb {
                 api_base_url: "https://api.igdb.com".into(),
                 images_base_url: "https://images.igdb.com".into(),
+                denylisted_name_substrings: HashSet::new(),
             },
             collections: vec![
                 Collection {

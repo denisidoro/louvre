@@ -1,5 +1,11 @@
 [
    {
+      "name": "bad game",
+      "id": 1034,
+      "aggregated_rating": 90.0,
+      "artworks": []
+   },
+   {
       "name": "__NAME__",
       "id": 1035,
       "aggregated_rating": 90.0,
