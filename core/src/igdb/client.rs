@@ -23,7 +23,7 @@ impl Client {
             r#"fields id,name,rating,aggregated_rating,cover.image_id,artworks.image_id,screenshots.image_id,first_release_date,genres.name,involved_companies.company.name,storyline,summary;
     search "{}";
     where platforms = ({});
-    limit 1;"#,
+    limit 3;"#,
             simple_name.trim(),
             platform_id,
         );
@@ -49,7 +49,12 @@ impl Client {
             .find(|game| {
                 let game_name = game.name.to_ascii_lowercase();
                 for denylisted_name_substring in &denylisted_name_substrings {
-                    if denylisted_name_substring.contains(&game_name) {
+                    if game_name.contains(denylisted_name_substring) {
+                        info!(
+                            status = "denylisted",
+                            game = &game_name,
+                            denylist_substr = &denylisted_name_substring
+                        );
                         return false;
                     }
                 }
@@ -101,6 +106,7 @@ impl Client {
         let mut headers = header::HeaderMap::new();
         headers.insert("Client-ID", header::HeaderValue::from_str(&client_id)?);
         headers.insert("Authorization", header::HeaderValue::from_str(&bearer)?);
+        info!(bearer = &bearer);
 
         let http = HttpClient::builder()
             .default_headers(headers)
