@@ -38,6 +38,14 @@ pub fn prettify(path: &Path) -> String {
         .trim_end_matches(" (ROM)")
         .trim_end_matches(" (ISO)")
         .trim_end_matches(']')
+        .replace("[!]", "")
+        .replace("(U)", "")
+        .replace("(UE)", "")
+        .replace("(J)", "")
+        .replace("[C]", "")
+        .replace("[E]", "")
+        .replace("(M5)", "")
+        .replace("(beta)", "")
         .replace("Bros.", "Bros")
         .replace("Pokemon", "Pokémon")
         .replace("Legend of Zelda, The", "The Legend of Zelda");
@@ -52,6 +60,8 @@ pub fn prettify(path: &Path) -> String {
 
     t.trim()
         .trim_end_matches(" ENC")
+        .trim()
+        .trim_end_matches("[!")
         .trim()
         .trim_end_matches(" Update")
         .trim()
