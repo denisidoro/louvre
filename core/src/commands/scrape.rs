@@ -42,6 +42,7 @@ impl FileWorker for Input {
 
     fn process(collection: &Collection, file: &Path, system: &System) -> Result<WorkerResult> {
         let title = title::prettify(file, &collection.title_map);
+        // dbg!(&title);
         let igdb_client = system.get::<igdb::Client>()?;
         let was_already_processed = process_title(collection, &title, file, igdb_client)?;
         let progress = if was_already_processed {

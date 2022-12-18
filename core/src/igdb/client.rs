@@ -25,7 +25,7 @@ impl Client {
     where platforms = ({});
     limit 3;"#,
             simple_name.trim(),
-            platform_id,
+            platform_id.query_str(),
         );
 
         let uri = format!("{}/v4/games", self.config.yaml.igdb.api_base_url);

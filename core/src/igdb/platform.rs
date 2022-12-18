@@ -8,6 +8,16 @@ use std::convert::{From, TryFrom};
 #[derive(Display)]
 pub struct PlatformId(u8);
 
+impl PlatformId {
+    pub fn query_str(self) -> String {
+        if self.0 == 19 {
+            "19,58".into() // SNES + Super Famicom
+        } else {
+            self.to_string()
+        }
+    }
+}
+
 static MAPPING: Lazy<HashMap<u8, Platform>> = Lazy::new(|| {
     use Platform::*;
     HashMap::from([
