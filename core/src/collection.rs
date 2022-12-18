@@ -20,6 +20,7 @@ pub struct Collection {
     pub extensions: Vec<String>,
     pub platform: Platform,
     pub denylist: Option<Vec<String>>,
+    pub title_map: Option<HashMap<String, String>>,
     pub launch: String,
 }
 

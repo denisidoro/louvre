@@ -13,7 +13,7 @@ static REGEXES: Lazy<[Regex; 8]> = Lazy::new(|| {
     ]
 });
 
-pub fn prettify(path: &Path) -> String {
+pub fn prettify(path: &Path, title_map: &Option<HashMap<String, String>>) -> String {
     let grandparent = path.parent().and_then(|p| p.parent());
     let actual_path = match grandparent {
         Some(gp) => {
@@ -61,14 +61,23 @@ pub fn prettify(path: &Path) -> String {
     let t = REGEXES[5].replace_all(t.trim(), "The $1");
     let t = REGEXES[7].replace_all(t.trim(), "");
 
-    t.trim()
+    let t = t
+        .trim()
         .trim_end_matches(" ENC")
-        .trim()
         .trim_end_matches("[!")
-        .trim()
         .trim_end_matches(" Update")
         .trim()
-        .into()
+        .into();
+
+    if let Some(tm) = title_map {
+        for (k, v) in tm {
+            if &t == k {
+                return v.clone();
+            }
+        }
+    }
+
+    t
 }
 
 fn regex(re: &str) -> Regex {
@@ -90,6 +99,12 @@ mod tests {
 
         let allowlist = ["zip", "rar", "7z", "iso", "cue", "bin", "3ds", "cia"];
 
+        let title_map = {
+            let mut m = HashMap::new();
+            m.insert("mvsc".to_owned(), "Marvel vs Capcom".to_owned());
+            Some(m)
+        };
+
         let mut output = vec![];
         for entry in entries {
             let path = entry.path();
@@ -99,7 +114,7 @@ mod tests {
                 .to_string()
                 .to_ascii_lowercase();
             if allowlist.contains(&extension.as_str()) {
-                output.push(prettify(path));
+                output.push(prettify(path, &title_map));
             }
         }
 
@@ -118,6 +133,7 @@ mod tests {
                 "God of War - Chains of Olympus",
                 "Kingdom Hearts 3D - Dream Drop Distance",
                 "Luigi's Mansion",
+                "Marvel vs Capcom",
                 "Mega Man X4",
                 "Metroid Prime",
                 "Monster Hunter 4 Ultimate",
