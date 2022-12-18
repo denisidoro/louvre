@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-static REGEXES: Lazy<[Regex; 7]> = Lazy::new(|| {
+static REGEXES: Lazy<[Regex; 8]> = Lazy::new(|| {
     [
         regex(r"\([^\)]+\)"),     // remove (...)
         regex(r"/\[[^\]]+\]"),    // remove [...]
@@ -9,6 +9,7 @@ static REGEXES: Lazy<[Regex; 7]> = Lazy::new(|| {
         regex(r" +"),             // remove consecutive spaces
         regex(r"(.*), ?The *$"),  // remove leading ", The"
         regex(r"\w{4}\d{5}\-\["), // remove BLES00539-[
+        regex(r"\[.*"),           // remove [...
     ]
 });
 
@@ -46,6 +47,7 @@ pub fn prettify(path: &Path) -> String {
         .replace("[E]", "")
         .replace("(M5)", "")
         .replace("(beta)", "")
+        .replace("Mega Man X ", "Mega Man X")
         .replace("Bros.", "Bros")
         .replace("Pokemon", "Pokémon")
         .replace("Legend of Zelda, The", "The Legend of Zelda");
@@ -57,6 +59,7 @@ pub fn prettify(path: &Path) -> String {
     let t = REGEXES[3].replace_all(t.trim(), "");
     let t = REGEXES[4].replace_all(t.trim(), " ");
     let t = REGEXES[5].replace_all(t.trim(), "The $1");
+    let t = REGEXES[7].replace_all(t.trim(), "");
 
     t.trim()
         .trim_end_matches(" ENC")
@@ -133,6 +136,7 @@ mod tests {
                 "Pokémon Trading Card Game",
                 "Pokémon X",
                 "Professor Layton and the Miracle Mask",
+                "Star Fox 2",
                 "Super Mario Galaxy",
                 "Super Mario Sunshine",
                 "Super Smash Bros Melee",

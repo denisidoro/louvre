@@ -25,6 +25,7 @@ pub fn id(platform: &Platform) -> Result<&'static str> {
         PlayStation2 => Ok("ps2"),
         PlayStation3 => Ok("ps3"),
         Psp => Ok("psp"),
+        Arcade => Ok("arcade"),
         Dreamcast => Ok("dreamcast"),
         Windows => Ok("windows"),
         Xbox => Ok("xbox"),

@@ -36,6 +36,7 @@ static MAPPING: Lazy<HashMap<u8, Platform>> = Lazy::new(|| {
         (38, Psp),
         (41, WiiU),
         (48, PlayStation4),
+        (52, Arcade),
         (56, WiiWare),
         (130, Switch),
         (159, NintendoDsi),

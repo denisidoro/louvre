@@ -58,14 +58,19 @@ pub fn run<I: FileWorker>(input: &I, system: System) -> Result<()> {
                             res,
                             error: None,
                         },
-                        Err(e) => FullWorkerResult {
-                            collection: collection_name,
-                            res: WorkerResult {
-                                entry: file.to_string(),
-                                progress: (0, 0),
-                            },
-                            error: Some(e),
-                        },
+                        Err(e) => {
+                            if e.to_string().contains("Too Many Requests") {
+                                panic!("aborting because of too many requests")
+                            }
+                            FullWorkerResult {
+                                collection: collection_name,
+                                res: WorkerResult {
+                                    entry: file.to_string(),
+                                    progress: (0, 0),
+                                },
+                                error: Some(e),
+                            }
+                        }
                     }
                 }),
             )
