@@ -8,6 +8,16 @@ use std::convert::{From, TryFrom};
 #[derive(Display)]
 pub struct PlatformId(u8);
 
+impl PlatformId {
+    pub fn query_str(self) -> String {
+        if self.0 == 19 {
+            "19,58".into() // SNES + Super Famicom
+        } else {
+            self.to_string()
+        }
+    }
+}
+
 static MAPPING: Lazy<HashMap<u8, Platform>> = Lazy::new(|| {
     use Platform::*;
     HashMap::from([
@@ -36,6 +46,7 @@ static MAPPING: Lazy<HashMap<u8, Platform>> = Lazy::new(|| {
         (38, Psp),
         (41, WiiU),
         (48, PlayStation4),
+        (52, Arcade),
         (56, WiiWare),
         (130, Switch),
         (159, NintendoDsi),

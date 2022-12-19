@@ -14,7 +14,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
     writeln!(buf, "file: {}", &meta.file.to_string())?;
 
     if let Some(secs) = meta.igdb.first_release_date {
-        let naive = NaiveDateTime::from_timestamp(secs as i64, 0);
+        let naive = NaiveDateTime::from_timestamp_opt(secs as i64, 0).context("invalid date")?;
         let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
         writeln!(buf, "release: {}", datetime.format("%Y-%m-%d"))?
     };

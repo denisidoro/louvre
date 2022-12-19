@@ -33,6 +33,7 @@ pub enum Platform {
     NintendoDsi,
     Playstation5,
     XboxSeries,
+    Arcade,
     Other(u8),
 }
 
@@ -56,6 +57,7 @@ impl TryFrom<&str> for Platform {
             "lnx" | "linux" => Ok(Linux),
             "n64" | "64" => Ok(Nintendo64),
             "wii" => Ok(Wii),
+            "arcade" | "cps" | "cps2" | "cps3" | "fbneo" | "fbalpha" | "fba" | "mame" => Ok(Arcade),
             "win" | "windows" | "pc" => Ok(Windows),
             "ps1" | "psx" | "playstation" => Ok(PlayStation),
             "ps2" | "playstation2" => Ok(PlayStation2),

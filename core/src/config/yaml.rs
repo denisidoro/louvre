@@ -107,6 +107,7 @@ impl Default for YamlConfig {
                     platform: Platform::GameBoyAdvance,
                     launch: "m start -n com.retroarch.aarch64/com.retroarch.browser.retroactivity.RetroActivityFuture -e ROM {file.path} -e LIBRETRO /data/data/com.retroarch.aarch64/cores/mgba_libretro_android.so -e CONFIGFILE /storage/emulated/0/Android/data/com.retroarch.aarch64/files/retroarch.cfg -e QUITFOCUS --activity-clear-task --activity-clear-top --activity-no-history".into(),
                     denylist: None,
+                    title_map: None,
                 },
             ],
             tracing: Some(TracingConfig {

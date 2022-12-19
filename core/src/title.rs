@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-static REGEXES: Lazy<[Regex; 7]> = Lazy::new(|| {
+static REGEXES: Lazy<[Regex; 8]> = Lazy::new(|| {
     [
         regex(r"\([^\)]+\)"),     // remove (...)
         regex(r"/\[[^\]]+\]"),    // remove [...]
@@ -9,10 +9,11 @@ static REGEXES: Lazy<[Regex; 7]> = Lazy::new(|| {
         regex(r" +"),             // remove consecutive spaces
         regex(r"(.*), ?The *$"),  // remove leading ", The"
         regex(r"\w{4}\d{5}\-\["), // remove BLES00539-[
+        regex(r"\[.*"),           // remove [...
     ]
 });
 
-pub fn prettify(path: &Path) -> String {
+pub fn prettify(path: &Path, title_map: &Option<HashMap<String, String>>) -> String {
     let grandparent = path.parent().and_then(|p| p.parent());
     let actual_path = match grandparent {
         Some(gp) => {
@@ -38,6 +39,15 @@ pub fn prettify(path: &Path) -> String {
         .trim_end_matches(" (ROM)")
         .trim_end_matches(" (ISO)")
         .trim_end_matches(']')
+        .replace("[!]", "")
+        .replace("(U)", "")
+        .replace("(UE)", "")
+        .replace("(J)", "")
+        .replace("[C]", "")
+        .replace("[E]", "")
+        .replace("(M5)", "")
+        .replace("(beta)", "")
+        .replace("Mega Man X ", "Mega Man X")
         .replace("Bros.", "Bros")
         .replace("Pokemon", "Pokémon")
         .replace("Legend of Zelda, The", "The Legend of Zelda");
@@ -49,13 +59,25 @@ pub fn prettify(path: &Path) -> String {
     let t = REGEXES[3].replace_all(t.trim(), "");
     let t = REGEXES[4].replace_all(t.trim(), " ");
     let t = REGEXES[5].replace_all(t.trim(), "The $1");
+    let t = REGEXES[7].replace_all(t.trim(), "");
 
-    t.trim()
-        .trim_end_matches(" ENC")
+    let t = t
         .trim()
+        .trim_end_matches(" ENC")
+        .trim_end_matches("[!")
         .trim_end_matches(" Update")
         .trim()
-        .into()
+        .into();
+
+    if let Some(tm) = title_map {
+        for (k, v) in tm {
+            if &t == k {
+                return v.clone();
+            }
+        }
+    }
+
+    t
 }
 
 fn regex(re: &str) -> Regex {
@@ -77,6 +99,12 @@ mod tests {
 
         let allowlist = ["zip", "rar", "7z", "iso", "cue", "bin", "3ds", "cia"];
 
+        let title_map = {
+            let mut m = HashMap::new();
+            m.insert("mvsc".to_owned(), "Marvel vs Capcom".to_owned());
+            Some(m)
+        };
+
         let mut output = vec![];
         for entry in entries {
             let path = entry.path();
@@ -86,7 +114,7 @@ mod tests {
                 .to_string()
                 .to_ascii_lowercase();
             if allowlist.contains(&extension.as_str()) {
-                output.push(prettify(path));
+                output.push(prettify(path, &title_map));
             }
         }
 
@@ -105,6 +133,7 @@ mod tests {
                 "God of War - Chains of Olympus",
                 "Kingdom Hearts 3D - Dream Drop Distance",
                 "Luigi's Mansion",
+                "Marvel vs Capcom",
                 "Mega Man X4",
                 "Metroid Prime",
                 "Monster Hunter 4 Ultimate",
@@ -123,6 +152,7 @@ mod tests {
                 "Pokémon Trading Card Game",
                 "Pokémon X",
                 "Professor Layton and the Miracle Mask",
+                "Star Fox 2",
                 "Super Mario Galaxy",
                 "Super Mario Sunshine",
                 "Super Smash Bros Melee",

@@ -45,6 +45,10 @@ impl Input {
                 games_buffer.push_str("\n\n");
             }
 
+            if files.is_empty() {
+                continue;
+            }
+
             let txt = format!(
                 "{}\n{}",
                 pegasus::collection::to_str(collection, &files),
