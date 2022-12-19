@@ -23,7 +23,7 @@ impl Client {
             r#"fields id,name,rating,aggregated_rating,cover.image_id,artworks.image_id,screenshots.image_id,first_release_date,genres.name,involved_companies.company.name,storyline,summary;
     search "{}";
     where platforms = ({});
-    limit 3;"#,
+    limit 4;"#,
             simple_name.trim(),
             platform_id.query_str(),
         );
