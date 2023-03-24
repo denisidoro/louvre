@@ -57,21 +57,21 @@ impl FileWorker for Input {
     }
 }
 
-fn yaml_path(collection: &Collection, title: &str) -> PathBuf {
+fn yaml_path(collection: &Collection, rom: &Path) -> PathBuf {
     let mut p = collection.path.clone();
     p.push(meta::FOLDER_NAME);
-    p.push(&title.replace(": ", " ").replace(" - ", " ").trim());
-    p.push(meta::YAML_NAME);
+    let filename = format!("{}_{}", rom.to_string_lossy(), meta::YAML_NAME).replace(' ', "_");
+    p.push(filename);
     p
 }
 
 fn process_title(
     collection: &Collection,
     title: &str,
-    file: &Path,
+    rom: &Path,
     igdb_client: &igdb::Client,
 ) -> Result<bool> {
-    let meta_path = yaml_path(collection, title);
+    let meta_path = yaml_path(collection, rom);
 
     if meta_path.exists() {
         return Ok(true);
@@ -83,7 +83,7 @@ fn process_title(
 
     let igdb = igdb_client.get_metadata(title, collection.platform)?;
     let meta = Meta {
-        file: file.into(),
+        file: rom.into(),
         igdb,
     };
 

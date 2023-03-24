@@ -197,8 +197,7 @@ impl Runner {
             "ROMs",
             "gba",
             "meta",
-            "The Legend of Zelda The Minish Cap",
-            "meta.yaml",
+            "The_Legend_of_Zelda_-_The_Minish_Cap.zip_meta.yaml",
         ]));
         assert!(meta.exists());
 
