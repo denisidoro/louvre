@@ -60,7 +60,15 @@ impl FileWorker for Input {
 fn yaml_path(collection: &Collection, rom: &Path) -> PathBuf {
     let mut p = collection.path.clone();
     p.push(meta::FOLDER_NAME);
-    let filename = format!("{}_{}", rom.to_string_lossy(), meta::YAML_NAME).replace(' ', "_");
+    let filename = format!(
+        "{}_{}",
+        rom.to_string_lossy()
+            .replace(|c: char| !c.is_alphanumeric(), "_"),
+        meta::YAML_NAME
+    )
+    .replace("___", "_")
+    .replace("__", "_")
+    .replace("__", "_");
     p.push(filename);
     p
 }

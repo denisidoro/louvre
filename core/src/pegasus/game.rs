@@ -8,7 +8,7 @@ use std::fmt::Write as _;
 pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<String> {
     let mut buf = String::new();
     let parent = meta_file.parent().context("no parent")?;
-    let title = meta_file
+    let rom = meta_file
         .file_name()
         .expect("no filename")
         .to_string_lossy()
@@ -35,7 +35,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
         buf,
         "assets.boxFront: {}",
         parent
-            .join(format!("{}_boxFront.jpg", title))
+            .join(format!("{}boxFront.jpg", rom))
             .strip_prefix(&collection.path)?
             .to_string()
     )?;
@@ -44,7 +44,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
         buf,
         "assets.background: {}",
         parent
-            .join(format!("{}_background.jpg", title))
+            .join(format!("{}background.jpg", rom))
             .strip_prefix(&collection.path)?
             .to_string()
     )?;
@@ -53,7 +53,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
         buf,
         "assets.screenshot: {}",
         parent
-            .join(format!("{}_screenshot.jpg", title))
+            .join(format!("{}screenshot.jpg", rom))
             .strip_prefix(&collection.path)?
             .to_string()
     )?;
