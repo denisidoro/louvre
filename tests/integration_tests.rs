@@ -35,13 +35,14 @@ fn test_e2e() {
 
 fn copy_roms() -> Result<(PathBuf, PathBuf)> {
     let pwd = env::current_dir()?;
-    let project_dir = pwd.parent().context("no parent")?;
+    let project_dir = pwd;
+    // let project_dir = pwd.parent().context("no parent")?;
 
     let fixtures_dir = project_dir.join("fixtures");
     let roms_dir = fixtures_dir.join("ROMs");
 
     let testdata_dir = {
-        let mut p = project_dir.to_owned();
+        let mut p = project_dir;
         p.push("target");
         p.push("testdata");
         p
