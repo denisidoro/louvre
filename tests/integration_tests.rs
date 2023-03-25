@@ -163,7 +163,7 @@ impl Runner {
     }
 
     fn test_scrape(&self) -> Result<()> {
-        let json = include_str!("../../fixtures/responses/metadata.json");
+        let json = include_str!("../fixtures/responses/metadata.json");
 
         let auth = r#"{
             "access_token": "test_access_token", 
