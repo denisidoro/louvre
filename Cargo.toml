@@ -1,3 +1,42 @@
-[workspace]
-members = ["core", "common_derive", "common"]
-resolver = "2"
+[package]
+name = "louvre"
+version = "0.5.0"
+authors = ["Denis Isidoro <denis_isidoro@live.com>"]
+edition = "2021"
+description = "Lightweight, cross-platform game scraper"
+homepage = "https://github.com/denisidoro/louvre"
+documentation = "https://github.com/denisidoro/louvre"
+repository = "https://github.com/denisidoro/louvre"
+keywords = ["game", "scraper", "emulator"]
+categories = ["command-line-utilities"]
+license = "Apache-2.0"
+
+[dependencies]
+regex = { version = "1.5.4", default-features = false, features = ["std", "unicode-perl"] }
+clap = { version = "3", features = ["derive"] }
+walkdir = "2"
+workerpool = "1.2.0"
+once_cell = "1.10.0"
+# isahc = { version = "1.7.2", default-features = false , features = ["http2", "static-curl", "text-decoding"] }
+reqwest = { version = "0.11.0", default-features = false, features = ["blocking", "gzip", "rustls-tls"] }
+derive_more = "0.99.16"
+# common_derive = { path = "../common_derive" }
+# common = { path = "../common", default-features = false, features = ["yaml", "json"] }
+dns_common_derive = { version = "0.2.0" }
+dns_common = { version = "0.2.0", default-features = false, features = ["yaml", "json"] }
+serde = { version = "1.0" } # TODO: try to remove somehow
+# serde_derive = "1.0.137"
+# anyhow = "1.0.55"
+chrono = "0.4"
+
+[dev-dependencies]
+httpmock = "0.6.6"
+
+[lib]
+name = "louvre"
+path = "src/lib.rs"
+
+[[bin]]
+name = "louvre"
+path = "src/bin/main.rs"
+bench = false

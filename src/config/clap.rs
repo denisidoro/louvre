@@ -1,7 +1,7 @@
 use crate::commands;
 use crate::prelude::*;
 use clap::{Parser, Subcommand};
-use common_derive::{HasDeps, Runnable};
+use dns_common_derive::{HasDeps, Runnable};
 
 #[derive(Subcommand, Debug, Clone, Runnable, HasDeps)]
 pub enum Cmd {

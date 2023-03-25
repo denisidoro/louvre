@@ -1,10 +1,10 @@
-use common::tracing::TracingConfig;
+use dns_common::tracing::TracingConfig;
 
 use crate::collection::Collection;
 use crate::config;
 use crate::platform::Platform;
 use crate::prelude::*;
-use common::deser::yaml_from_path as from_path;
+use dns_common::deser::yaml_from_path as from_path;
 
 static YAML_FILE_NAME: &str = "config.yaml";
 

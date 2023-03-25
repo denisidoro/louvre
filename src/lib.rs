@@ -1,4 +1,4 @@
-extern crate common;
+extern crate dns_common;
 
 mod collection;
 mod commands;
@@ -13,7 +13,7 @@ mod title;
 mod twitch;
 mod worker;
 
-use common::tracing;
+use dns_common::tracing;
 use prelude::*;
 
 pub fn boot(args: Option<Vec<&str>>) -> Result<()> {

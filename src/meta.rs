@@ -2,7 +2,7 @@ use crate::collection::Collection;
 use crate::igdb;
 use crate::meta;
 use crate::prelude::*;
-use common::deser::yaml_from_path;
+use dns_common::deser::yaml_from_path;
 use walkdir::WalkDir;
 
 pub static FOLDER_NAME: &str = "meta";
