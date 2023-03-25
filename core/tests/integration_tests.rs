@@ -247,12 +247,12 @@ impl Runner {
             "gba",
             &[
                 "game: __NAME__",
-                "file: Fullmetal Alchemist Stray Rondo.zip",
+                "file: ../Fullmetal Alchemist Stray Rondo.zip",
                 "release: 2004-11-04",
                 "genres: Role-playing (RPG), Adventure",
-                "assets.boxFront: meta/Fullmetal_Alchemist_Stray_Rondo_zip_boxFront.jpg",
-                "assets.background: meta/Fullmetal_Alchemist_Stray_Rondo_zip_background.jpg",
-                "assets.screenshot: meta/Fullmetal_Alchemist_Stray_Rondo_zip_screenshot.jpg",
+                "assets.boxFront: Fullmetal_Alchemist_Stray_Rondo_zip_boxFront.jpg",
+                "assets.background: Fullmetal_Alchemist_Stray_Rondo_zip_background.jpg",
+                "assets.screenshot: Fullmetal_Alchemist_Stray_Rondo_zip_screenshot.jpg",
                 "rating: 90%",
                 "developers: Capcom, Flagship",
                 "publishers: Nintendo",
@@ -266,8 +266,8 @@ impl Runner {
         self.assert_meta(
             "ps3",
             &[
-                "file: BCES01175-[Uncharted 3 Drakes Deception]/PS3_GAME/USRDIR/EBOOT.BIN",
-                "assets.boxFront: meta/BCES01175_Uncharted_3_Drakes_Deception_PS3_GAME_USRDIR_EBOOT_BIN_boxFront.jpg",
+                "file: ../BCES01175-[Uncharted 3 Drakes Deception]/PS3_GAME/USRDIR/EBOOT.BIN",
+                "assets.boxFront: BCES01175_Uncharted_3_Drakes_Deception_PS3_GAME_USRDIR_EBOOT_BIN_boxFront.jpg",
             ],
         )?;
 
@@ -278,6 +278,7 @@ impl Runner {
         let meta_path = self.testdata_dir.join(PathBuf::from_iter(&[
             "ROMs",
             platform,
+            "meta",
             "metadata.pegasus.txt",
         ]));
 
