@@ -23,7 +23,7 @@ pub fn get_filepaths(collections: &[Collection]) -> Result<HashMap<usize, Vec<Pa
         let mut filepaths: Vec<PathBuf> = vec![];
 
         let entries = WalkDir::new(&collection_path)
-            .max_depth(3)
+            .max_depth(2)
             .into_iter()
             .filter_map(|e| e.ok());
 
@@ -36,7 +36,7 @@ pub fn get_filepaths(collections: &[Collection]) -> Result<HashMap<usize, Vec<Pa
                     .to_string_lossy()
                     .to_string();
 
-                if filename == meta::YAML_NAME {
+                if filename.ends_with(meta::YAML_NAME) {
                     filepaths.push(path.into())
                 }
             }

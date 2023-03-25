@@ -1,5 +1,5 @@
 use crate::collection::Collection;
-use crate::meta::Meta;
+use crate::meta::{self, Meta};
 use crate::prelude::*;
 use chrono::prelude::*;
 use std::cmp::max;
@@ -8,6 +8,11 @@ use std::fmt::Write as _;
 pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<String> {
     let mut buf = String::new();
     let parent = meta_file.parent().context("no parent")?;
+    let rom = meta_file
+        .file_name()
+        .expect("no filename")
+        .to_string_lossy()
+        .replace(meta::YAML_NAME, "");
 
     writeln!(buf, "game: {}", &meta.igdb.name)?;
 
@@ -30,7 +35,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
         buf,
         "assets.boxFront: {}",
         parent
-            .join("boxFront.jpg")
+            .join(format!("{}boxFront.jpg", rom))
             .strip_prefix(&collection.path)?
             .to_string()
     )?;
@@ -39,7 +44,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
         buf,
         "assets.background: {}",
         parent
-            .join("background.jpg")
+            .join(format!("{}background.jpg", rom))
             .strip_prefix(&collection.path)?
             .to_string()
     )?;
@@ -48,7 +53,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
         buf,
         "assets.screenshot: {}",
         parent
-            .join("screenshot.jpg")
+            .join(format!("{}screenshot.jpg", rom))
             .strip_prefix(&collection.path)?
             .to_string()
     )?;

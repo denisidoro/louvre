@@ -26,35 +26,24 @@ impl FileWorker for Input {
 
     fn process(collection: &Collection, file: &Path, system: &System) -> Result<WorkerResult> {
         let game = meta::get(file)?.igdb;
-        let title = get_title(file)?;
 
-        let progress = process_game(collection, &title, &game, system.get::<igdb::Client>()?)?;
+        let progress = process_game(collection, file, &game, system.get::<igdb::Client>()?)?;
         Ok(WorkerResult {
-            entry: title,
+            entry: file.to_string_lossy().into(),
             progress,
         })
     }
 }
 
-fn get_title(file: &Path) -> Result<String> {
-    Ok(file
-        .parent()
-        .context("no parent")?
-        .file_name()
-        .context("no filename")?
-        .to_string())
-}
-
 fn process_game(
     collection: &Collection,
-    title: &str,
+    meta_file: &Path,
     game: &Game,
     igdb_client: &igdb::Client,
 ) -> Result<(u8, u8)> {
     let game_path = {
         let mut p = collection.path.to_owned();
         p.push(meta::FOLDER_NAME);
-        p.push(title);
         p
     };
 
@@ -82,9 +71,11 @@ fn process_game(
         ),
     ];
 
+    let rom = meta_file.to_string_lossy().replace(meta::YAML_NAME, "");
+
     for (image_option, image_name, image_size) in image_definitions {
         if let Some(image) = image_option {
-            let image_path = game_path.join(image_name);
+            let image_path = game_path.join(format!("{}{}", rom, image_name));
             if image_path.exists() {
                 already_processed += delta;
             } else {

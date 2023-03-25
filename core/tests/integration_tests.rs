@@ -197,8 +197,7 @@ impl Runner {
             "ROMs",
             "gba",
             "meta",
-            "The Legend of Zelda The Minish Cap",
-            "meta.yaml",
+            "The_Legend_of_Zelda_The_Minish_Cap_zip_meta.yaml",
         ]));
         assert!(meta.exists());
 
@@ -225,15 +224,18 @@ impl Runner {
         mock.assert_hits(36);
         mock.delete();
 
-        let zelda = self.testdata_dir.join(PathBuf::from_iter(&[
-            "ROMs",
-            "gba",
-            "meta",
-            "The Legend of Zelda The Minish Cap",
-        ]));
-        assert!(zelda.join("background.jpg").exists());
-        assert!(zelda.join("boxFront.jpg").exists());
-        assert!(zelda.join("screenshot.jpg").exists());
+        let meta = self
+            .testdata_dir
+            .join(PathBuf::from_iter(&["ROMs", "gba", "meta"]));
+        assert!(meta
+            .join("The_Legend_of_Zelda_The_Minish_Cap_zip_background.jpg")
+            .exists());
+        assert!(meta
+            .join("The_Legend_of_Zelda_The_Minish_Cap_zip_boxFront.jpg")
+            .exists());
+        assert!(meta
+            .join("The_Legend_of_Zelda_The_Minish_Cap_zip_screenshot.jpg")
+            .exists());
 
         Ok(())
     }
@@ -248,9 +250,9 @@ impl Runner {
                 "file: Fullmetal Alchemist Stray Rondo.zip",
                 "release: 2004-11-04",
                 "genres: Role-playing (RPG), Adventure",
-                "assets.boxFront: meta/Fullmetal Alchemist Stray Rondo/boxFront.jpg",
-                "assets.background: meta/Fullmetal Alchemist Stray Rondo/background.jpg",
-                "assets.screenshot: meta/Fullmetal Alchemist Stray Rondo/screenshot.jpg",
+                "assets.boxFront: meta/Fullmetal_Alchemist_Stray_Rondo_zip_boxFront.jpg",
+                "assets.background: meta/Fullmetal_Alchemist_Stray_Rondo_zip_background.jpg",
+                "assets.screenshot: meta/Fullmetal_Alchemist_Stray_Rondo_zip_screenshot.jpg",
                 "rating: 90%",
                 "developers: Capcom, Flagship",
                 "publishers: Nintendo",
@@ -260,11 +262,12 @@ impl Runner {
             ],
         )?;
 
+        // TODO
         self.assert_meta(
             "ps3",
             &[
                 "file: BCES01175-[Uncharted 3 Drakes Deception]/PS3_GAME/USRDIR/EBOOT.BIN",
-                "assets.boxFront: meta/Uncharted 3 Drakes Deception/boxFront.jpg",
+                "assets.boxFront: meta/BCES01175_Uncharted_3_Drakes_Deception_PS3_GAME_USRDIR_EBOOT_BIN_boxFront.jpg",
             ],
         )?;
 
