@@ -5,7 +5,7 @@ use crate::prelude::*;
 pub fn to_str(collection: &Collection, files: &[PathBuf]) -> String {
     let files_str = files
         .iter()
-        .map(|f| f.to_string())
+        .map(|f| format!("../{}", f.to_string()))
         .collect::<Vec<_>>()
         .join("\n   ");
 
