@@ -5,9 +5,8 @@ use chrono::prelude::*;
 use std::cmp::max;
 use std::fmt::Write as _;
 
-pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<String> {
+pub fn to_str(meta: Meta, meta_file: &Path, _collection: &Collection) -> Result<String> {
     let mut buf = String::new();
-    let parent = meta_file.parent().context("no parent")?;
     let rom = meta_file
         .file_name()
         .expect("no filename")
@@ -16,7 +15,7 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
 
     writeln!(buf, "game: {}", &meta.igdb.name)?;
 
-    writeln!(buf, "file: {}", &meta.file.to_string())?;
+    writeln!(buf, "file: ../{}", &meta.file.to_string())?;
 
     if let Some(secs) = meta.igdb.first_release_date {
         let naive = NaiveDateTime::from_timestamp_opt(secs as i64, 0).context("invalid date")?;
@@ -31,32 +30,9 @@ pub fn to_str(meta: Meta, meta_file: &Path, collection: &Collection) -> Result<S
         }
     };
 
-    writeln!(
-        buf,
-        "assets.boxFront: {}",
-        parent
-            .join(format!("{}boxFront.jpg", rom))
-            .strip_prefix(&collection.path)?
-            .to_string()
-    )?;
-
-    writeln!(
-        buf,
-        "assets.background: {}",
-        parent
-            .join(format!("{}background.jpg", rom))
-            .strip_prefix(&collection.path)?
-            .to_string()
-    )?;
-
-    writeln!(
-        buf,
-        "assets.screenshot: {}",
-        parent
-            .join(format!("{}screenshot.jpg", rom))
-            .strip_prefix(&collection.path)?
-            .to_string()
-    )?;
+    writeln!(buf, "assets.boxFront: {}boxFront.jpg", rom)?;
+    writeln!(buf, "assets.background: {}background.jpg", rom)?;
+    writeln!(buf, "assets.screenshot: {}screenshot.jpg", rom)?;
 
     if let Some(x) = meta.igdb.aggregated_rating.or(meta.igdb.rating) {
         writeln!(buf, "rating: {}%", x as u8)?;

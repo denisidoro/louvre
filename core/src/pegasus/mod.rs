@@ -3,12 +3,15 @@ pub mod game;
 pub mod platform;
 
 use crate::collection::Collection;
-use crate::prelude::*;
+use crate::{meta, prelude::*};
 
 pub static TXT_NAME: &str = "metadata.pegasus.txt";
 
 impl Collection {
     pub fn pegasus_path(&self) -> PathBuf {
-        self.path.join(TXT_NAME)
+        let mut p = self.path.clone();
+        p.push(meta::FOLDER_NAME);
+        p.push(TXT_NAME);
+        p
     }
 }
