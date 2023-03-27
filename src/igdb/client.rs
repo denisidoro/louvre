@@ -1,5 +1,5 @@
 use super::*;
-use crate::common::deser::json_from_str;
+use crate::dns_common::deser::json_from_str;
 use crate::platform::Platform;
 use crate::prelude::*;
 use crate::twitch;

@@ -5,7 +5,7 @@ use crate::prelude::*;
 use crate::title;
 use crate::worker::{self, FileWorker, WorkerResult};
 use clap::Args;
-use common::deser::to_yaml_str;
+use dns_common::deser::to_yaml_str;
 use std::fs;
 use walkdir::WalkDir;
 

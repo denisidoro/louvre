@@ -2,7 +2,7 @@ use crate::config;
 use crate::prelude::*;
 use clap::Args;
 use clap::Subcommand;
-use common::deser::to_yaml_str;
+use dns_common::deser::to_yaml_str;
 use std::fs;
 
 #[derive(Subcommand, Debug, Clone)]

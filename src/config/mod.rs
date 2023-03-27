@@ -23,5 +23,5 @@ impl Config {
 }
 
 pub fn default_dir() -> Result<PathBuf> {
-    common::fs::config_dir(PROJECT_NAME)
+    dns_common::fs::config_dir(PROJECT_NAME)
 }

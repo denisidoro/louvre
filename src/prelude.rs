@@ -1,6 +1,6 @@
 pub use crate::config::*;
-pub use common::prelude::*;
-use common::system;
+pub use dns_common::prelude::*;
+use dns_common::system;
 pub use once_cell::sync::Lazy;
 pub use regex::Regex;
 

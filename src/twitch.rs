@@ -1,8 +1,8 @@
 use crate::config;
 use crate::prelude::*;
-use common::deser::json_from_str;
-use common::deser::to_yaml_str;
-use common::deser::yaml_from_path;
+use dns_common::deser::json_from_str;
+use dns_common::deser::to_yaml_str;
+use dns_common::deser::yaml_from_path;
 use reqwest::blocking::Client as HttpClient;
 use std::fs;
 use std::time::{SystemTime, UNIX_EPOCH};

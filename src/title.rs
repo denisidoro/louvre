@@ -91,7 +91,7 @@ mod tests {
 
     #[test]
     fn test_prettify() {
-        let dir = PathBuf::from("../fixtures/ROMs");
+        let dir = PathBuf::from("./fixtures/ROMs");
         let entries = WalkDir::new(&dir)
             .max_depth(6)
             .into_iter()
